@@ -7,6 +7,7 @@ import { ConfigModule } from "@nestjs/config";
 import { AppUpdate } from "./app.update";
 import * as process from "process";
 import { CompleteTask, CreateTask, DeleteTask } from "./app.scenes";
+import { PrismaService } from "./PrismaService";
 
 const sessions = new LocalSession({ database: 'session_db.json'})
 
@@ -18,7 +19,7 @@ const sessions = new LocalSession({ database: 'session_db.json'})
       middlewares: [sessions.middleware()],
     })
   ],
-  providers: [AppService, AppUpdate, CompleteTask, DeleteTask, CreateTask],
+  providers: [AppService, AppUpdate, CompleteTask, DeleteTask, CreateTask, PrismaService],
 })
 
 export class AppModule {}
