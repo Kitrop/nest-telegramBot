@@ -16,7 +16,7 @@ export class CompleteTask {
 
   @On("text")
   async getIdTask(@Message("text") idTask: string, @Ctx() ctx: SceneContext) {
-    const response = await this.appService.completeTask(ctx.message.chat.id, idTask)
+    const response = await this.appService.completeTask(ctx.message.chat.id, idTask);
 
     if (response !== "already" && response !== "nan" && response !== "not found") {
       await ctx.reply("Задача завершена");
@@ -25,8 +25,8 @@ export class CompleteTask {
     }
 
     if (response === "nan") {
-        await ctx.reply("Вы ввели не число");
-        await ctx.scene.reenter();
+      await ctx.reply("Вы ввели не число");
+      await ctx.scene.reenter();
     }
 
     if (response === "already") {
@@ -60,7 +60,7 @@ export class DeleteTask {
 
   @On("text")
   async getIdTask(@Message("text") idTask: string, @Ctx() ctx: SceneContext) {
-    const response = await this.appService.deleteTask(ctx.message.chat.id, idTask)
+    const response = await this.appService.deleteTask(ctx.message.chat.id, idTask);
 
     if (response !== "not found" && response !== "nan" && response !== "error") {
       await ctx.reply("Задача удалена");
@@ -92,7 +92,7 @@ export class DeleteTask {
   }
 }
 
-@Scene('create')
+@Scene("create")
 export class CreateTask {
   constructor(private readonly appService: AppService) {
   }
@@ -105,13 +105,12 @@ export class CreateTask {
   @On("text")
   async createTask(@Message("text") nameTask: string, @Ctx() ctx: SceneContext) {
 
-    const response = await this.appService.createTask({name: nameTask, chatId: ctx.message.chat.id})
+    const response = await this.appService.createTask({ name: nameTask, chatId: ctx.message.chat.id });
 
-    if (response === "error" ) {
-      await ctx.reply("Имя задачи должно быть от 3 символов");
+    if (response === "error") {
+      await ctx.reply("Неверное количество символов. Имя задачи должно быть от 3 до 80 символов");
       await ctx.scene.reenter();
-    }
-    else {
+    } else {
       await ctx.reply("Задача создана");
       actionButtons();
       await ctx.scene.leave();

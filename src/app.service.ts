@@ -27,13 +27,13 @@ export class AppService {
       }
 
       // @ts-ignore
-      if (!todos[taskId-1]) {
+      if (!todos[taskId - 1]) {
         return "not found";
       }
 
       // @ts-ignore
-      if (todos[taskId-1].isDone) {
-        return 'already'
+      if (todos[taskId - 1].isDone) {
+        return "already";
       }
       // @ts-ignore
       const needId = todos[taskId - 1].id;
@@ -57,8 +57,7 @@ export class AppService {
     const taskIdInt = Number(taskId);
     if (!taskIdInt) {
       return "nan";
-    }
-    else {
+    } else {
 
       const todos = await this.getAllTask(chatId);
       if (!todos) {
@@ -66,7 +65,7 @@ export class AppService {
       }
 
       // @ts-ignore
-      if (!todos[taskId-1]) {
+      if (!todos[taskId - 1]) {
         return "not found";
       }
 
@@ -80,14 +79,14 @@ export class AppService {
         where: {
           id: needId
         }
-      })
+      });
     }
 
 
   }
 
   async createTask(data: Prisma.TaskCreateInput) {
-    if (!data.name.trim() || data.name.trim().length < 3) {
+    if (!data.name.trim() || data.name.trim().length < 3 || data.name.length > 80) {
       return "error";
     }
     return this.prisma.task.create({
